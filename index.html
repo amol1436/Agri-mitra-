@@ -17,12 +17,10 @@
       height: 100vh;
       color: white;
     }
-
     .logo {
       width: 150px;
       margin-bottom: 30px;
     }
-
     .card {
       background: #2a2a40;
       padding: 25px;
@@ -31,13 +29,11 @@
       max-width: 340px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
-
     .tabs {
       display: flex;
       justify-content: space-around;
       margin-bottom: 20px;
     }
-
     .tab {
       flex: 1;
       text-align: center;
@@ -47,21 +43,17 @@
       font-weight: bold;
       color: #ccc;
     }
-
     .tab.active {
       color: white;
       border-bottom: 2px solid white;
     }
-
     .form {
       display: none;
       flex-direction: column;
     }
-
     .form.active {
       display: flex;
     }
-
     input {
       margin: 8px 0;
       padding: 12px;
@@ -69,7 +61,6 @@
       border: none;
       font-size: 16px;
     }
-
     .main-btn {
       margin-top: 15px;
       padding: 12px;
@@ -80,7 +71,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-
     .google-btn {
       margin-top: 15px;
       padding: 10px;
@@ -95,7 +85,6 @@
       gap: 10px;
       cursor: pointer;
     }
-
     .google-icon {
       width: 20px;
     }
@@ -130,7 +119,6 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth-compat.js"></script>
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyA5tM-5HRT-_0DLN7VgggOP_2G8sllO3Ko",
@@ -145,6 +133,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
+    // Switch Tabs
     function switchTab(tabName) {
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.form').forEach(form => form.classList.remove('active'));
@@ -152,41 +141,52 @@
       document.getElementById(tabName).classList.add('active');
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("loginBtn").addEventListener("click", () => {
-        const email = document.getElementById("loginEmail").value;
-        const password = document.getElementById("loginPassword").value;
+    // Google Login
+    document.getElementById("googleLoginBtn").addEventListener("click", () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithRedirect(provider);
+    });
 
-        auth.signInWithEmailAndPassword(email, password)
-          .then(() => {
-            alert("Login successful!");
-            window.location.href = "preference.html";
-          })
-          .catch(error => alert("Login failed: " + error.message));
-      });
+    // Handle Redirect Result (after Google login)
+    auth.getRedirectResult().then((result) => {
+      if (result.user) {
+        alert("Welcome " + result.user.email);
+        window.location.href = "preference.html";
+      }
+    }).catch((error) => {
+      if (error.message) alert("Login failed: " + error.message);
+    });
 
-      document.getElementById("signupBtn").addEventListener("click", () => {
-        const email = document.getElementById("signupEmail").value;
-        const password = document.getElementById("signupPassword").value;
-        const confirm = document.getElementById("signupConfirm").value;
+    // Email/Password Login
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
 
-        if (password !== confirm) {
-          alert("Passwords do not match.");
-          return;
-        }
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Login successful!");
+          window.location.href = "preference.html";
+        })
+        .catch(error => alert("Login failed: " + error.message));
+    });
 
-        auth.createUserWithEmailAndPassword(email, password)
-          .then(() => {
-            alert("Sign up successful!");
-            window.location.href = "preference.html";
-          })
-          .catch(error => alert("Sign up failed: " + error.message));
-      });
+    // Email/Password Sign Up
+    document.getElementById("signupBtn").addEventListener("click", () => {
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      const confirm = document.getElementById("signupConfirm").value;
 
-      document.getElementById("googleLoginBtn").addEventListener("click", () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithRedirect(provider);
-      });
+      if (password !== confirm) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Sign up successful!");
+          window.location.href = "preference.html";
+        })
+        .catch(error => alert("Sign up failed: " + error.message));
     });
   </script>
 </body>
