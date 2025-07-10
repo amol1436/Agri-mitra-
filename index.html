@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AgriMitra - Login</title>
   <style>
     body {
@@ -92,6 +92,7 @@
 </head>
 <body>
   <img src="https://raw.githubusercontent.com/amol1436/Agri-mitra-/refs/heads/main/file_00000000c07461f6b7089f1196f12216%20(1).png" class="logo" alt="AgriMitra Logo">
+
   <div class="card">
     <div class="tabs">
       <div class="tab active" onclick="switchTab('login')">Login</div>
@@ -144,17 +145,14 @@
     // Google Login
     document.getElementById("googleLoginBtn").addEventListener("click", () => {
       const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithRedirect(provider);
-    });
-
-    // Handle Redirect Result (after Google login)
-    auth.getRedirectResult().then((result) => {
-      if (result.user) {
-        alert("Welcome " + result.user.email);
-        window.location.href = "preference.html";
-      }
-    }).catch((error) => {
-      if (error.message) alert("Login failed: " + error.message);
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          alert("Welcome " + result.user.email);
+          window.location.href = "preference.html";
+        })
+        .catch((error) => {
+          alert("Google login failed: " + error.message);
+        });
     });
 
     // Email/Password Login
