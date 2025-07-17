@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AgriMitra - Login</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -17,63 +21,80 @@
       height: 100vh;
       color: white;
     }
+
     .logo {
       width: 150px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
+
     .card {
       background: #2a2a40;
-      padding: 25px;
+      padding: 30px 25px;
       border-radius: 20px;
       width: 90%;
-      max-width: 340px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      max-width: 360px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
+
     .tabs {
       display: flex;
       justify-content: space-around;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+
     .tab {
       flex: 1;
       text-align: center;
       padding: 10px;
       cursor: pointer;
       border-bottom: 2px solid transparent;
-      font-weight: bold;
+      font-weight: 600;
       color: #ccc;
+      transition: 0.3s;
     }
+
     .tab.active {
       color: white;
       border-bottom: 2px solid white;
     }
+
     .form {
       display: none;
       flex-direction: column;
     }
+
     .form.active {
       display: flex;
     }
+
     input {
-      margin: 8px 0;
-      padding: 12px;
-      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 14px;
+      border-radius: 10px;
       border: none;
       font-size: 16px;
     }
+
     .main-btn {
-      margin-top: 15px;
-      padding: 12px;
+      margin-top: 5px;
+      padding: 14px;
       border: none;
       border-radius: 25px;
       background: linear-gradient(to right, #ff416c, #ff4b2b);
       color: white;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
     }
+
+    .main-btn:hover {
+      opacity: 0.9;
+    }
+
     .google-btn {
       margin-top: 15px;
-      padding: 10px;
+      padding: 12px;
       border-radius: 25px;
       border: 1px solid white;
       background: transparent;
@@ -83,10 +104,18 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      font-size: 15px;
       cursor: pointer;
+      transition: 0.3s;
     }
+
+    .google-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
     .google-icon {
       width: 20px;
+      height: 20px;
     }
   </style>
 </head>
